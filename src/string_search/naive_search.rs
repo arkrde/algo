@@ -39,10 +39,10 @@ mod tests {
     #[test]
     fn search_test() {
         let s = naive_search::Searcher::from_str("abxyabxz");
-        let res = s.search("xabxyabxyabxz");
-        assert_eq!(res, Some(5));
-        let s = naive_search::Searcher::from_str("abxybxz");
-        let res = s.search("xabxyabxyabxz");
-        assert_eq!(res, None);
+        assert_eq!(s.search("xabxyabxyabxz"), Some(5));
+        assert_eq!(s.search("xabxyabxyabx"), None);
+        assert_eq!(s.search("xabxyabxyabxs"), None);
+        assert_eq!(s.search("xabxybxyabxy"), None);
+        assert_eq!(s.search("xabxycbxyabxy"), None);
     }
 }
