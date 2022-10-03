@@ -15,19 +15,21 @@ impl Searcher {
     /// Returns an optional result containing the index to the
     /// beginning of a successful result.
     pub fn search(&self, text: &str) -> Option<usize> {
-        let mut pos: usize = 0;
-        while pos <= text.len() - self.pattern.len() {
-            let mut done: bool = true;
-            for (p, t) in self.pattern.chars().zip(text[pos..].chars()) {
-                if p != t {
-                    done = false;
-                    break;
+        // let mut pos: usize = 0;
+        for pos in 0..(text.len() - self.pattern.len() + 1) {
+            let c = self
+                .pattern
+                .chars()
+                .zip(text[pos..].chars())
+                .take_while(|(a, b)| a == b)
+                .count();
+
+            match c == self.pattern.len() {
+                true => {
+                    return Some(pos);
                 }
+                false => {}
             }
-            if done {
-                return Some(pos);
-            }
-            pos += 1;
         }
         None
     }
