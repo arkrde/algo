@@ -83,10 +83,9 @@ impl Searcher {
 
 #[cfg(test)]
 mod tests {
-    use crate::string_search::linear_search;
     #[test]
     fn linear_search_test_1() {
-        let s = linear_search::Searcher::from_str("abxyabxz");
+        let s = super::Searcher::from_str("abxyabxz");
         assert_eq!(s.search("xabxyabxyabxz"), Some(5));
         assert_eq!(s.search("xabxyabxyabx"), None);
         assert_eq!(s.search("xabxyabxyabxs"), None);

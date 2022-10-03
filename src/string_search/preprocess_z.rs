@@ -69,10 +69,9 @@ impl PrepZ {
 
 #[cfg(test)]
 mod tests {
-    use crate::string_search::preprocess_z;
     #[test]
     fn preprocess_test_1() {
-        let s = preprocess_z::PrepZ::from_str("aabcaabxaaz");
+        let s = super::PrepZ::from_str("aabcaabxaaz");
         assert_eq!(s.score(0), Some(0));
         assert_eq!(s.score(1), Some(1));
         assert_eq!(s.score(2), Some(0));
@@ -87,7 +86,7 @@ mod tests {
     }
     #[test]
     fn preprocess_test_2() {
-        let s = preprocess_z::PrepZ::from_str("aabaabcaxaabaabcy");
+        let s = super::PrepZ::from_str("aabaabcaxaabaabcy");
         assert_eq!(s.score(9), Some(7));
         assert_eq!(s.left, 9);
         assert_eq!(s.right, 15);
@@ -95,7 +94,7 @@ mod tests {
 
     #[test]
     fn preprocess_test_3() {
-        let s = preprocess_z::PrepZ::from_str("abxyabxz");
+        let s = super::PrepZ::from_str("abxyabxz");
         assert_eq!(s.score(0), Some(0));
         assert_eq!(s.score(1), Some(0));
         assert_eq!(s.score(2), Some(0));
