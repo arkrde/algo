@@ -13,17 +13,11 @@ impl Searcher {
         }
     }
     fn search(&self, text: &str) -> Option<usize> {
-        let mut right: usize = 0;
-        for (a, b) in text.chars().zip(self.pat.chars()) {
-            match a == b {
-                false => {
-                    break;
-                }
-                true => {
-                    right += 1;
-                }
-            }
-        }
+        let mut right: usize = text
+            .chars()
+            .zip(self.pat.chars())
+            .take_while(|(a, b)| a == b)
+            .count();
         match right == self.pat.len() {
             true => Some(0),
             false => {
@@ -32,16 +26,11 @@ impl Searcher {
                 for k in 1..(self.pat.len() - 1) {
                     match k > right {
                         true => {
-                            for (a, b) in text[k..].chars().zip(self.pat.chars()) {
-                                match a == b {
-                                    true => {
-                                        z += 1;
-                                    }
-                                    false => {
-                                        break;
-                                    }
-                                }
-                            }
+                            z += text[k..]
+                                .chars()
+                                .zip(self.pat.chars())
+                                .take_while(|(a, b)| a == b)
+                                .count();
                             match z == self.pat.len() {
                                 true => {
                                     return Some(k);
@@ -67,21 +56,14 @@ impl Searcher {
                                     }
                                 }
                                 false => {
-                                    z = beta;
-                                    for (a, b) in
-                                        text[(right + 1)..].chars().zip(self.pat[z1..].chars())
-                                    {
-                                        match a == b {
-                                            true => {
-                                                z += 1;
-                                            }
-                                            false => {
-                                                left = k;
-                                                right = left + z;
-                                                break;
-                                            }
-                                        }
-                                    }
+                                    z = beta
+                                        + text[(right + 1)..]
+                                            .chars()
+                                            .zip(self.pat[z1..].chars())
+                                            .take_while(|(a, b)| a == b)
+                                            .count();
+                                    left = k;
+                                    right = left + z;
                                     match z == self.pat.len() {
                                         true => {
                                             return Some(k);

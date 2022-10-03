@@ -26,21 +26,14 @@ impl PrepZ {
     fn compute_impl(&mut self, k: usize) {
         match k > self.right {
             true => {
-                for (idx, (a, b)) in self.s[k..].chars().zip(self.s.chars()).enumerate() {
-                    match a == b {
-                        true => {}
-                        false => {
-                            match idx > 0 {
-                                true => {
-                                    self.z[k] = idx;
-                                    self.right = k + idx - 1;
-                                    self.left = k;
-                                }
-                                false => {}
-                            }
-                            break;
-                        }
-                    }
+                self.z[k] = self.s[k..]
+                    .chars()
+                    .zip(self.s.chars())
+                    .take_while(|(a, b)| a == b)
+                    .count();
+                if self.z[k] > 0 {
+                    self.left = k;
+                    self.right = k + self.z[k] - 1;
                 }
             }
             false => {
@@ -51,21 +44,13 @@ impl PrepZ {
                         self.z[k] = self.z[k1];
                     }
                     false => {
-                        for (idx, (a, b)) in self.s[(self.right + 1)..]
+                        self.right += self.s[(self.right + 1)..]
                             .chars()
                             .zip(self.s[(beta + 1)..].chars())
-                            .enumerate()
-                        {
-                            match a == b {
-                                true => {}
-                                false => {
-                                    self.z[k] = beta + idx;
-                                    self.right = idx;
-                                    self.left = k;
-                                    break;
-                                }
-                            }
-                        }
+                            .take_while(|(a, b)| a == b)
+                            .count();
+                        self.left = k;
+                        self.z[k] = self.right - k + 1;
                     }
                 }
             }
@@ -106,7 +91,6 @@ mod tests {
         assert_eq!(s.score(9), Some(7));
         assert_eq!(s.left, 9);
         assert_eq!(s.right, 15);
-        println!("left = {}, right = {}", s.left, s.right);
     }
 
     #[test]
@@ -120,6 +104,5 @@ mod tests {
         assert_eq!(s.score(5), Some(0));
         assert_eq!(s.score(6), Some(0));
         assert_eq!(s.score(7), Some(0));
-        println!("left = {}, right = {}", s.left, s.right);
     }
 }
