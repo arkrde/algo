@@ -1,8 +1,9 @@
 [package]
 name = "algorithms"
 description = "crate containing a variety of practical algorithms"
+repository = 
 version = "0.1.0"
 edition = "2021"
-
-
-[dependencies]
+authors = ["Arnab De <arkrde@gmail.com>", "Debomita Saha De <debomitasaha@gmail.com>"]
+license-file = "LICENSE"
+categories = ["algorithms"]
