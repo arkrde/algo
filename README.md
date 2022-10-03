@@ -1,2 +1,6 @@
 # algo
-Rust crate for a variety of practical algorithms
+Rust package for a variety of practical algorithms
+
+## TOC
+- [String Algorithms]()
+    - [Exact String Search]()
