@@ -1,18 +1,18 @@
 //! This is an implementation of a simple exact linear-time
 //! string search algorithm using preprocess-Z
 use crate::string_search::preprocess_z;
-struct Searcher {
+pub struct Searcher {
     pat: String,
     prep: preprocess_z::PrepZ,
 }
 impl Searcher {
-    fn from_str(pat: &str) -> Searcher {
+    pub fn from_str(pat: &str) -> Searcher {
         Searcher {
             pat: pat.to_string(),
             prep: preprocess_z::PrepZ::from_str(pat),
         }
     }
-    fn search(&self, text: &str) -> Option<usize> {
+    pub fn search(&self, text: &str) -> Option<usize> {
         let mut right: usize = text
             .chars()
             .zip(self.pat.chars())

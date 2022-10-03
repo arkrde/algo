@@ -1,2 +1,2 @@
 //! module for string search
-mod string_search;
+pub mod string_search;
