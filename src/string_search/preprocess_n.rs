@@ -22,7 +22,13 @@ mod tests {
     #[test]
     fn preprocess_test() {
         let s = super::PrepN::from_str("cabdabdab");
+        assert_eq!(s.score(0), Some(0));
+        assert_eq!(s.score(1), Some(0));
         assert_eq!(s.score(2), Some(2));
+        assert_eq!(s.score(3), Some(0));
+        assert_eq!(s.score(4), Some(0));
         assert_eq!(s.score(5), Some(5));
+        assert_eq!(s.score(6), Some(0));
+        assert_eq!(s.score(7), Some(0));
     }
 }
