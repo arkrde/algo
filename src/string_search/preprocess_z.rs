@@ -10,7 +10,7 @@ impl PrepZ {
     pub fn from_str(text: &str) -> PrepZ {
         let mut p = PrepZ {
             s: text.to_string(),
-            z: vec![0; text.len()],
+            z: vec![text.len(); text.len()],
             left: 0,
             right: 0,
         };
@@ -75,7 +75,7 @@ mod preprocess_z_tests {
     #[test]
     fn preprocess_test_1() {
         let s = super::PrepZ::from_str("aabcaabxaaz");
-        assert_eq!(s.score(0), Some(0));
+        assert_eq!(s.score(0), Some(11));
         assert_eq!(s.score(1), Some(1));
         assert_eq!(s.score(2), Some(0));
         assert_eq!(s.score(3), Some(0));
@@ -98,7 +98,7 @@ mod preprocess_z_tests {
     #[test]
     fn preprocess_test_3() {
         let s = super::PrepZ::from_str("abxyabxz");
-        assert_eq!(s.score(0), Some(0));
+        assert_eq!(s.score(0), Some(8));
         assert_eq!(s.score(1), Some(0));
         assert_eq!(s.score(2), Some(0));
         assert_eq!(s.score(3), Some(0));
@@ -106,5 +106,18 @@ mod preprocess_z_tests {
         assert_eq!(s.score(5), Some(0));
         assert_eq!(s.score(6), Some(0));
         assert_eq!(s.score(7), Some(0));
+    }
+
+    #[test]
+    fn preprocess_test_4() {
+        let s = super::PrepZ::from_str("aaaaaaaa");
+        assert_eq!(s.score(0), Some(8));
+        assert_eq!(s.score(1), Some(7));
+        assert_eq!(s.score(2), Some(6));
+        assert_eq!(s.score(3), Some(5));
+        assert_eq!(s.score(4), Some(4));
+        assert_eq!(s.score(5), Some(3));
+        assert_eq!(s.score(6), Some(2));
+        assert_eq!(s.score(7), Some(1));
     }
 }
