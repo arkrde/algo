@@ -1,24 +1,27 @@
 use crate::string_search::preprocess_z;
 
-struct PrepN {
+pub struct PrepN {
     prep: preprocess_z::PrepZ,
 }
 
 impl PrepN {
-    fn from_str(text: &str) -> PrepN {
+    pub fn from_str(text: &str) -> PrepN {
         let text_rev = text.chars().rev().collect::<String>();
         PrepN {
             prep: preprocess_z::PrepZ::from_str(&text_rev),
         }
     }
-    fn score(&self, idx: usize) -> Option<usize> {
+    pub fn score(&self, idx: usize) -> Option<usize> {
         let idx = self.prep.len() - 1 - idx;
         self.prep.score(idx)
+    }
+    pub fn len(&self) -> usize {
+        self.prep.len()
     }
 }
 
 #[cfg(test)]
-mod tests {
+mod preprocess_n_tests {
     #[test]
     fn preprocess_test() {
         let s = super::PrepN::from_str("cabdabdab");

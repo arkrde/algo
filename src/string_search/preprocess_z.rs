@@ -65,10 +65,13 @@ impl PrepZ {
             _ => None,
         }
     }
+    pub fn len(&self) -> usize {
+        self.z.len()
+    }
 }
 
 #[cfg(test)]
-mod tests {
+mod preprocess_z_tests {
     #[test]
     fn preprocess_test_1() {
         let s = super::PrepZ::from_str("aabcaabxaaz");
