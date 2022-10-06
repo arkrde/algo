@@ -88,4 +88,9 @@ mod boyer_moore_tests {
         assert_eq!(s.search("xabxybxyabxy"), None);
         assert_eq!(s.search("xabxycbxyabxy"), None);
     }
+    #[test]
+    fn test_2() {
+        let s = super::Searcher::from_str("text");
+        assert_eq!(s.search("this is a test text"), Some(15));
+    }
 }
