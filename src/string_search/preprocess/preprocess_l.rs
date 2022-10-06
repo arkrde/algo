@@ -1,12 +1,12 @@
-use crate::string_search::preprocess_n;
+use super::preprocess_n;
 
-pub struct PrepL {
-    prep_n: preprocess_n::PrepN,
+pub struct PrepL<'a> {
+    prep_n: &'a preprocess_n::PrepN,
     l: Vec<usize>,
 }
 
-impl PrepL {
-    pub fn new(p: preprocess_n::PrepN) -> PrepL {
+impl<'a> PrepL<'a> {
+    pub fn new(p: &'a preprocess_n::PrepN) -> PrepL {
         let l = vec![p.len(); p.len()];
         let mut prep = PrepL { prep_n: p, l: l };
         prep.compute();
@@ -40,7 +40,7 @@ mod preprocess_l_tests {
     #[test]
     fn preprocess_test() {
         let prep_n = super::preprocess_n::PrepN::from_str("cabdabdab");
-        let prep = super::PrepL::new(prep_n);
+        let prep = super::PrepL::new(&prep_n);
         assert_eq!(prep.score(0), None);
         assert_eq!(prep.score(1), None);
         assert_eq!(prep.score(2), None);
@@ -53,7 +53,7 @@ mod preprocess_l_tests {
     #[test]
     fn preprocess_test_unique_chars() {
         let prep_n = super::preprocess_n::PrepN::from_str("abcdefgh");
-        let prep = super::PrepL::new(prep_n);
+        let prep = super::PrepL::new(&prep_n);
         for i in 0..8 {
             assert_eq!(prep.score(i), None);
         }
@@ -62,7 +62,7 @@ mod preprocess_l_tests {
     #[test]
     fn preprocess_test_repeat_chars() {
         let prep_n = super::preprocess_n::PrepN::from_str("aaaaaaaa");
-        let prep = super::PrepL::new(prep_n);
+        let prep = super::PrepL::new(&prep_n);
         assert_eq!(prep.score(0), None);
         assert_eq!(prep.score(1), Some(6));
         assert_eq!(prep.score(2), Some(5));
@@ -76,7 +76,7 @@ mod preprocess_l_tests {
     #[test]
     fn preprocess_test_repeat_patterns() {
         let prep_n = super::preprocess_n::PrepN::from_str("abababab");
-        let prep = super::PrepL::new(prep_n);
+        let prep = super::PrepL::new(&prep_n);
         assert_eq!(prep.score(0), None);
         assert_eq!(prep.score(1), None);
         assert_eq!(prep.score(2), Some(5));

@@ -1,12 +1,12 @@
-use crate::string_search::preprocess_n;
+use super::preprocess_n;
 
-pub struct PrepLp {
-    prep_n: preprocess_n::PrepN,
+pub struct PrepLp<'a> {
+    prep_n: &'a preprocess_n::PrepN,
     lp: Vec<usize>,
 }
 
-impl PrepLp {
-    pub fn new(p: preprocess_n::PrepN) -> PrepLp {
+impl<'a> PrepLp<'a> {
+    pub fn new(p: &'a preprocess_n::PrepN) -> PrepLp {
         let lp = vec![0; p.len()];
         let mut prep = PrepLp { prep_n: p, lp: lp };
         prep.compute();
@@ -38,7 +38,7 @@ mod preprocess_lp_tests {
     #[test]
     fn preprocess_test() {
         let prep_n = super::preprocess_n::PrepN::from_str("cabdabdab");
-        let prep = super::PrepLp::new(prep_n);
+        let prep = super::PrepLp::new(&prep_n);
         assert_eq!(prep.score(0), Some(9));
         assert_eq!(prep.score(1), Some(0));
         assert_eq!(prep.score(2), Some(0));
@@ -51,7 +51,7 @@ mod preprocess_lp_tests {
     #[test]
     fn preprocess_test_unique_chars() {
         let prep_n = super::preprocess_n::PrepN::from_str("abcdefgh");
-        let prep = super::PrepLp::new(prep_n);
+        let prep = super::PrepLp::new(&prep_n);
         assert_eq!(prep.score(0), Some(8));
         assert_eq!(prep.score(1), Some(0));
         assert_eq!(prep.score(2), Some(0));
@@ -65,7 +65,7 @@ mod preprocess_lp_tests {
     #[test]
     fn preprocess_test_repeat_chars() {
         let prep_n = super::preprocess_n::PrepN::from_str("aaaaaaaa");
-        let prep = super::PrepLp::new(prep_n);
+        let prep = super::PrepLp::new(&prep_n);
         assert_eq!(prep.score(0), Some(8));
         assert_eq!(prep.score(1), Some(7));
         assert_eq!(prep.score(2), Some(6));
@@ -79,7 +79,7 @@ mod preprocess_lp_tests {
     #[test]
     fn preprocess_test_repeat_patterns() {
         let prep_n = super::preprocess_n::PrepN::from_str("abababab");
-        let prep = super::PrepLp::new(prep_n);
+        let prep = super::PrepLp::new(&prep_n);
         assert_eq!(prep.score(0), Some(8));
         assert_eq!(prep.score(1), Some(6));
         assert_eq!(prep.score(2), Some(6));

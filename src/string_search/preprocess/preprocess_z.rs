@@ -1,6 +1,5 @@
 pub struct PrepZ {
-    s: String,
-    z: Vec<usize>,
+    zvec: Vec<usize>,
     left: usize,
     right: usize,
 }
@@ -9,49 +8,49 @@ impl PrepZ {
     /// Constructs the preprocessor from an string slice
     pub fn from_str(text: &str) -> PrepZ {
         let mut p = PrepZ {
-            s: text.to_string(),
-            z: vec![text.len(); text.len()],
+            // pat: text,
+            zvec: vec![text.len(); text.len()],
             left: 0,
             right: 0,
         };
-        p.compute();
+        p.compute(text);
         p
     }
     /// Compute the Z-value for each position of the string
-    fn compute(&mut self) {
-        for i in 1..self.s.len() {
-            self.compute_impl(i);
+    fn compute(&mut self, text: &str) {
+        for i in 1..text.len() {
+            self.compute_impl(text, i);
         }
     }
     /// Helper method for `compute`
-    fn compute_impl(&mut self, k: usize) {
+    fn compute_impl(&mut self, text: &str, k: usize) {
         match k > self.right {
             true => {
-                self.z[k] = self.s[k..]
+                self.zvec[k] = text[k..]
                     .chars()
-                    .zip(self.s.chars())
+                    .zip(text.chars())
                     .take_while(|(a, b)| a == b)
                     .count();
-                if self.z[k] > 0 {
+                if self.zvec[k] > 0 {
                     self.left = k;
-                    self.right = k + self.z[k] - 1;
+                    self.right = k + self.zvec[k] - 1;
                 }
             }
             false => {
                 let k1 = k - self.left;
                 let beta: usize = self.right - k + 1;
-                match self.z[k1] < beta.try_into().unwrap() {
+                match self.zvec[k1] < beta.try_into().unwrap() {
                     true => {
-                        self.z[k] = self.z[k1];
+                        self.zvec[k] = self.zvec[k1];
                     }
                     false => {
-                        self.right += self.s[(self.right + 1)..]
+                        self.right += text[(self.right + 1)..]
                             .chars()
-                            .zip(self.s[(beta + 1)..].chars())
+                            .zip(text[(beta + 1)..].chars())
                             .take_while(|(a, b)| a == b)
                             .count();
                         self.left = k;
-                        self.z[k] = self.right - k + 1;
+                        self.zvec[k] = self.right - k + 1;
                     }
                 }
             }
@@ -61,13 +60,13 @@ impl PrepZ {
     /// i.e. the length of the longest substring of `s` that starts at `idx`
     /// and is a prefix of `s`
     pub fn score(&self, idx: usize) -> Option<usize> {
-        match idx < self.z.len() {
-            true => Some(self.z[idx]),
+        match idx < self.zvec.len() {
+            true => Some(self.zvec[idx]),
             _ => None,
         }
     }
     pub fn len(&self) -> usize {
-        self.z.len()
+        self.zvec.len()
     }
 }
 

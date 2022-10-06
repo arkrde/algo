@@ -1,4 +1,4 @@
-use crate::string_search::preprocess_z;
+use super::preprocess_z;
 
 pub struct PrepN {
     prep: preprocess_z::PrepZ,
@@ -8,7 +8,7 @@ impl PrepN {
     pub fn from_str(text: &str) -> PrepN {
         let text_rev = text.chars().rev().collect::<String>();
         PrepN {
-            prep: preprocess_z::PrepZ::from_str(&text_rev),
+            prep: preprocess_z::PrepZ::from_str(text_rev.as_str()),
         }
     }
     pub fn score(&self, idx: usize) -> Option<usize> {
