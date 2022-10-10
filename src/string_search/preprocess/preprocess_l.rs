@@ -1,23 +1,22 @@
 use super::preprocess_n;
 
-pub struct PrepL<'a> {
-    prep_n: &'a preprocess_n::PrepN,
+pub struct PrepL {
     l: Vec<usize>,
 }
 
-impl<'a> PrepL<'a> {
-    pub fn new(p: &'a preprocess_n::PrepN) -> PrepL {
+impl PrepL {
+    pub fn new(p: &preprocess_n::PrepN) -> PrepL {
         let l = vec![p.len(); p.len()];
-        let mut prep = PrepL { prep_n: p, l: l };
-        prep.compute();
+        let mut prep = PrepL { l: l };
+        prep.compute(&p);
         prep
     }
-    fn compute(&mut self) {
-        for j in 0..(self.prep_n.len() - 1) {
-            let n_score = self.prep_n.score(j).unwrap();
+    fn compute(&mut self, p: &preprocess_n::PrepN) {
+        for j in 0..(p.len() - 1) {
+            let n_score = p.score(j).unwrap();
             match n_score > 0 {
                 true => {
-                    let i = self.prep_n.len() - n_score;
+                    let i = p.len() - n_score;
                     self.l[i] = j;
                 }
                 false => {}
