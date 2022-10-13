@@ -1,13 +1,13 @@
 use super::preprocess_n;
 
 pub struct PrepL {
-    l: Vec<usize>,
+    score_vec: Vec<usize>,
 }
 
 impl PrepL {
     pub fn new(p: &preprocess_n::PrepN) -> PrepL {
         let l = vec![p.len(); p.len()];
-        let mut prep = PrepL { l: l };
+        let mut prep = PrepL { score_vec: l };
         prep.compute(&p);
         prep
     }
@@ -17,18 +17,18 @@ impl PrepL {
             match n_score > 0 {
                 true => {
                     let i = p.len() - n_score;
-                    self.l[i] = j;
+                    self.score_vec[i] = j;
                 }
                 false => {}
             }
         }
     }
     pub fn score(&self, idx: usize) -> Option<usize> {
-        match idx < self.l.len() {
+        match idx < self.score_vec.len() {
             false => None,
-            true => match self.l[idx] < self.l.len() {
+            true => match self.score_vec[idx] < self.score_vec.len() {
                 false => None,
-                true => Some(self.l[idx]),
+                true => Some(self.score_vec[idx]),
             },
         }
     }

@@ -1,22 +1,27 @@
 use super::preprocess_z;
 
 pub struct PrepN {
-    prep: preprocess_z::PrepZ,
+    // prep: preprocess_z::PrepZ,
+    score_vec: Vec<usize>,
 }
 
 impl PrepN {
     pub fn from_str(text: &str) -> PrepN {
         let text_rev = text.chars().rev().collect::<String>();
-        PrepN {
-            prep: preprocess_z::PrepZ::from_str(text_rev.as_str()),
-        }
+        let prep_z = preprocess_z::PrepZ::from_str(text_rev.as_str());
+        let score_vec = (0..prep_z.len()).map(|idx|{
+            prep_z.score(prep_z.len() - 1 - idx).unwrap()
+        }).collect();
+        PrepN { score_vec }
     }
     pub fn score(&self, idx: usize) -> Option<usize> {
-        let idx = self.prep.len() - 1 - idx;
-        self.prep.score(idx)
+        match idx < self.score_vec.len() {
+            true => Some(self.score_vec[idx]),
+            _ => None,
+        }
     }
     pub fn len(&self) -> usize {
-        self.prep.len()
+        self.score_vec.len()
     }
 }
 

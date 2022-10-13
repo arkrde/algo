@@ -7,11 +7,13 @@ pub struct PrepZ {
 impl PrepZ {
     /// Constructs the preprocessor from an string slice
     pub fn from_str(text: &str) -> PrepZ {
+        let score_vec = vec![text.len(); text.len()];
+        let left_pos: usize = 0;
+        let right_pos: usize = 0;
         let mut prep = PrepZ {
-            // pat: text,
-            score_vec: vec![text.len(); text.len()],
-            left_pos: 0,
-            right_pos: 0,
+            score_vec,
+            left_pos,
+            right_pos,
         };
         prep.compute(text);
         prep
