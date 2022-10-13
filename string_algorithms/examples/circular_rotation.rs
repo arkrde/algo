@@ -1,16 +1,16 @@
 //! Given two strings: alpha and beta, this examples determines whether alpha
 //! is a circular / cyclic rotation of beta.
-extern crate algorithms;
+extern crate string_algorithms;
 
-use algorithms::string_search::boyer_moore;
+use string_algorithms::string_search::boyer_moore;
 
-/// To detect whether a string alpha is a circular rotation of another string beta, 
+/// To detect whether a string alpha is a circular rotation of another string beta,
 /// this algorithm first checks whether alpha and beta are of the same length. Then
-/// it concatenates beta with itself, followed by an exact string search of alpha 
+/// it concatenates beta with itself, followed by an exact string search of alpha
 /// into the newly concatenated beta. If there is a match, then alpha is circular
 /// rotation of beta. Otherwise, it's not.
-/// 
-/// The algorithm can use any exact-search algorithm. However, we use a simple 
+///
+/// The algorithm can use any exact-search algorithm. However, we use a simple
 /// preprocessing-Z based linear-search algorithm for efficiency.
 fn main() {
     let alpha = "defabc";
@@ -18,17 +18,16 @@ fn main() {
     match alpha.len() == beta.len() {
         false => {
             println!("{} is not a circular rotation of {}", alpha, beta);
-        },
+        }
         _ => {
             let full_string = beta.to_string() + beta;
             let mut searcher = boyer_moore::BoyerMooreSearcher::new(beta, &full_string);
             match searcher.next() {
                 Some(_) => {
-                        println!("{} is a circular rotation of {}", alpha, beta);
-                    },
+                    println!("{} is a circular rotation of {}", alpha, beta);
+                }
                 None => {
                     println!("{} is not a circular rotation of {}", alpha, beta);
-
                 }
             }
         }

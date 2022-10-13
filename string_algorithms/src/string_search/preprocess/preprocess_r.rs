@@ -14,7 +14,7 @@ impl PrepR {
     pub fn score(&self, key: &char) -> Option<usize> {
         match self.r.get(&key) {
             Some(u) => Some(*u),
-            _ => None
+            _ => None,
         }
     }
 }

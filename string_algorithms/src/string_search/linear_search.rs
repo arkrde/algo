@@ -32,7 +32,7 @@ impl Searcher {
                                 .take_while(|(a, b)| a == b)
                                 .count();
                             match z == self.pat.len() {
-                                true =>  return Some(k), 
+                                true => return Some(k),
                                 _ => {
                                     left = k;
                                     right = z + k - 1;
@@ -76,9 +76,9 @@ impl Searcher {
 }
 
 #[cfg(test)]
-mod tests {
+mod string_algorithm_tests {
     #[test]
-    fn linear_search_test_1() {
+    fn linear_search_test() {
         let s = super::Searcher::from_str("abxyabxz");
         assert_eq!(s.search("xabxyabxyabxz"), Some(5));
         assert_eq!(s.search("xabxyabxyabx"), None);
