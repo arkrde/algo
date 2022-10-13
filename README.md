@@ -10,7 +10,7 @@ Rust package for a variety of practical algorithms
                 - [x] Naive Brute-force Algorithm
                 - [x] Simple Linear Algorithm
                 - [ ] Knuth Morris Pratt (KMP) Algorithm
-                - [ ] Boyer Moore (BM) Algorithm
+                - [X] Boyer Moore (BM) Algorithm
             - [ ] Semi-numerical Algorithms
                 - [ ] Shift-And Algorithm
                 - [ ] Karp-Robin Fingerprint Algorithm
