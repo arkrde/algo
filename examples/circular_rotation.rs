@@ -2,7 +2,7 @@
 //! is a circular / cyclic rotation of beta.
 extern crate algorithms;
 
-use algorithms::string_search::linear_search;
+use algorithms::string_search::boyer_moore;
 
 /// To detect whether a string alpha is a circular rotation of another string beta, 
 /// this algorithm first checks whether alpha and beta are of the same length. Then
@@ -21,8 +21,8 @@ fn main() {
         },
         _ => {
             let full_string = beta.to_string() + beta;
-            let searcher = linear_search::Searcher::from_str(&full_string[..]);
-            match searcher.search(&full_string[..]) {
+            let mut searcher = boyer_moore::BoyerMooreSearcher::new(beta, &full_string);
+            match searcher.next() {
                 Some(_) => {
                         println!("{} is a circular rotation of {}", alpha, beta);
                     },
