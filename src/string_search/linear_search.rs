@@ -1,6 +1,6 @@
 //! This is an implementation of a simple exact linear-time
 //! string search algorithm using preprocess-Z
-use crate::string_search::preprocess_z;
+use super::preprocess::preprocess_z;
 pub struct Searcher {
     pat: String,
     prep: preprocess_z::PrepZ,
@@ -32,10 +32,8 @@ impl Searcher {
                                 .take_while(|(a, b)| a == b)
                                 .count();
                             match z == self.pat.len() {
-                                true => {
-                                    return Some(k);
-                                }
-                                false => {
+                                true =>  return Some(k), 
+                                _ => {
                                     left = k;
                                     right = z + k - 1;
                                 }
@@ -49,10 +47,8 @@ impl Searcher {
                                 true => {
                                     z = z1;
                                     match z == self.pat.len() {
-                                        true => {
-                                            return Some(k);
-                                        }
-                                        false => {}
+                                        true => return Some(k),
+                                        _ => {}
                                     }
                                 }
                                 false => {
@@ -65,10 +61,8 @@ impl Searcher {
                                     left = k;
                                     right = left + z;
                                     match z == self.pat.len() {
-                                        true => {
-                                            return Some(k);
-                                        }
-                                        false => {}
+                                        true => return Some(k),
+                                        _ => {}
                                     }
                                 }
                             }

@@ -1,9 +1,12 @@
 //! module for string-searching algorithms
+
+/// Module for preprocessing routines for linear and sublinear
+/// search algorithms like Boyer Moore
+mod preprocess;
+
 // search based on backtracking on first  mismatch
 pub mod naive_search;
-// preprocess-Z as common preprocessing for smarter algorithms
-// e.g. BM, KMP, etc.
-mod preprocess_z;
-
-// Simple linear-time exact string search using preprocess-Z
+/// Simple linear-time exact string search using preprocess-Z
 pub mod linear_search;
+
+pub mod boyer_moore;
