@@ -54,19 +54,34 @@ impl<'a> NaiveSearcher<'a> {
 }
 
 #[cfg(test)]
-mod tests {
+mod string_algorithm_tests {
     #[test]
-    fn search_test() {
+    fn naive_search_test() {
         let pat = "abxyabxz";
         let text = "xabxyabxyabxz";
         let mut s = super::NaiveSearcher::new(pat, text);
         assert_eq!(s.next(), Some(5));
         let results: Vec<usize> = super::NaiveSearcher::new("ab", "xabxyabxyabxz").collect();
         assert_eq!(results, vec![1, 5, 9]);
-        assert_eq!(super::NaiveSearcher::new("abxyabxz", "xabxyabxyabxz").collect::<Vec<usize>>(), vec![5]);
-        assert_eq!(super::NaiveSearcher::new("abxyabxz", "xabxyabxyabx").collect::<Vec<usize>>(), vec![]);
-        assert_eq!(super::NaiveSearcher::new("abxyabxz", "xabxyabxyabxs").collect::<Vec<usize>>(), vec![]);
-        assert_eq!(super::NaiveSearcher::new("abxyabxz", "xabxybxyabxy").collect::<Vec<usize>>(), vec![]);
-        assert_eq!(super::NaiveSearcher::new("abxyabxz", "xabxycbxyabxy").collect::<Vec<usize>>(), vec![]);
+        assert_eq!(
+            super::NaiveSearcher::new("abxyabxz", "xabxyabxyabxz").collect::<Vec<usize>>(),
+            vec![5]
+        );
+        assert_eq!(
+            super::NaiveSearcher::new("abxyabxz", "xabxyabxyabx").collect::<Vec<usize>>(),
+            vec![]
+        );
+        assert_eq!(
+            super::NaiveSearcher::new("abxyabxz", "xabxyabxyabxs").collect::<Vec<usize>>(),
+            vec![]
+        );
+        assert_eq!(
+            super::NaiveSearcher::new("abxyabxz", "xabxybxyabxy").collect::<Vec<usize>>(),
+            vec![]
+        );
+        assert_eq!(
+            super::NaiveSearcher::new("abxyabxz", "xabxycbxyabxy").collect::<Vec<usize>>(),
+            vec![]
+        );
     }
 }

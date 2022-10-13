@@ -94,19 +94,34 @@ impl<'a> Iterator for BoyerMooreSearcher<'a> {
 }
 
 #[cfg(test)]
-mod boyer_moore_tests {
+mod string_algorithm_tests {
     #[test]
-    fn search_test() {
+    fn boyer_mooore_test() {
         let pat = "abxyabxz";
         let text = "xabxyabxyabxz";
         let mut s = super::BoyerMooreSearcher::new(pat, text);
         assert_eq!(s.next(), Some(5));
         let results: Vec<usize> = super::BoyerMooreSearcher::new("ab", "xabxyabxyabxz").collect();
         assert_eq!(results, vec![1, 5, 9]);
-        assert_eq!(super::BoyerMooreSearcher::new("abxyabxz", "xabxyabxyabxz").collect::<Vec<usize>>(), vec![5]);
-        assert_eq!(super::BoyerMooreSearcher::new("abxyabxz", "xabxyabxyabx").collect::<Vec<usize>>(), vec![]);
-        assert_eq!(super::BoyerMooreSearcher::new("abxyabxz", "xabxyabxyabxs").collect::<Vec<usize>>(), vec![]);
-        assert_eq!(super::BoyerMooreSearcher::new("abxyabxz", "xabxybxyabxy").collect::<Vec<usize>>(), vec![]);
-        assert_eq!(super::BoyerMooreSearcher::new("abxyabxz", "xabxycbxyabxy").collect::<Vec<usize>>(), vec![]);
+        assert_eq!(
+            super::BoyerMooreSearcher::new("abxyabxz", "xabxyabxyabxz").collect::<Vec<usize>>(),
+            vec![5]
+        );
+        assert_eq!(
+            super::BoyerMooreSearcher::new("abxyabxz", "xabxyabxyabx").collect::<Vec<usize>>(),
+            vec![]
+        );
+        assert_eq!(
+            super::BoyerMooreSearcher::new("abxyabxz", "xabxyabxyabxs").collect::<Vec<usize>>(),
+            vec![]
+        );
+        assert_eq!(
+            super::BoyerMooreSearcher::new("abxyabxz", "xabxybxyabxy").collect::<Vec<usize>>(),
+            vec![]
+        );
+        assert_eq!(
+            super::BoyerMooreSearcher::new("abxyabxz", "xabxycbxyabxy").collect::<Vec<usize>>(),
+            vec![]
+        );
     }
 }
