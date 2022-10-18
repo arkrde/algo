@@ -71,7 +71,7 @@ impl<'a> BoyerMooreSearcher<'a> {
                         let mismatch_char = pat.chars().nth(n - 1 - match_dist).unwrap();
                         let bad_char_pos = prep_r.score(&mismatch_char).unwrap();
                         let bad_char_shift = match bad_char_pos < (n - 1 - match_dist) {
-                            true => (n - 1 - match_dist - bad_char_pos),
+                            true => n - 1 - match_dist - bad_char_pos,
                             false => 1,
                         };
                         let good_suffix_pos = Self::compute_good_suffix_distance(
