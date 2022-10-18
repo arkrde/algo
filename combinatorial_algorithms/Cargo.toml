@@ -1,0 +1,7 @@
+[package]
+name = "combinatorial_algorithms"
+description = "Collection of combinatorial algorithms"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license-file.workspace = true
