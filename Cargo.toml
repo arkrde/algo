@@ -2,3 +2,11 @@
 members = [
     "string_algorithms"
 ]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Arnab De <arkrde@gmail.com>", "Debomita Saha De <debomitasaha@gmail.com>"]
+license-file = "LICENSE"
+desription = "Collection of various practical algorithms"
+categories = ["algorithms"]
