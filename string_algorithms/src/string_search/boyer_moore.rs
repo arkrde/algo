@@ -1,22 +1,36 @@
-use super::preprocess::preprocess_l;
-use super::preprocess::preprocess_lprime;
-use super::preprocess::preprocess_n;
-use super::preprocess::preprocess_r;
+use super::preprocess::preprocess_l::PrepL;
+use super::preprocess::preprocess_lprime::PrepLp;
+use super::preprocess::preprocess_n::PrepN;
+use super::preprocess::preprocess_r::PrepR;
 
 pub struct BoyerMooreSearcher<'a> {
     pat: &'a str,
     text: &'a str,
     pos: usize,
+    prep_l: PrepL,
+    prep_lprime: PrepLp,
+    prep_r: PrepR,
 }
 
 impl<'a> BoyerMooreSearcher<'a> {
     pub fn new(pat: &'a str, text: &'a str) -> BoyerMooreSearcher<'a> {
         let pos: usize = 0;
-        BoyerMooreSearcher { pat, text, pos }
+        let prep_n = PrepN::from_str(&pat);
+        let prep_l = PrepL::new(&prep_n);
+        let prep_lprime = PrepLp::new(&prep_n);
+        let prep_r = PrepR::from_str(&pat);
+        BoyerMooreSearcher {
+            pat,
+            text,
+            pos,
+            prep_l,
+            prep_lprime,
+            prep_r,
+        }
     }
     fn compute_good_suffix_distance(
-        prep_l: &preprocess_l::PrepL,
-        prep_lprime: &preprocess_lprime::PrepLp,
+        prep_l: &PrepL,
+        prep_lprime: &PrepLp,
         pos: usize,
     ) -> usize {
         let l_score = prep_l.score(pos);
@@ -31,12 +45,14 @@ impl<'a> BoyerMooreSearcher<'a> {
             }
         }
     }
-    fn search_helper(pat: &str, text: &str, start_pos: usize) -> Option<(usize, usize)> {
-        let prep_n = preprocess_n::PrepN::from_str(&pat);
-        let prep_l = preprocess_l::PrepL::new(&prep_n);
-        let prep_lprime = preprocess_lprime::PrepLp::new(&prep_n);
-        let prep_r = preprocess_r::PrepR::from_str(&pat);
-
+    fn search_helper(
+        pat: &str,
+        text: &str,
+        start_pos: usize,
+        prep_l: &PrepL,
+        prep_lprime: &PrepLp,
+        prep_r: &PrepR,
+    ) -> Option<(usize, usize)> {
         let n: usize = pat.len();
         let m: usize = text.len();
         let mut k: usize = start_pos;
@@ -63,7 +79,10 @@ impl<'a> BoyerMooreSearcher<'a> {
                             &prep_lprime,
                             n - 1 - match_dist,
                         );
-                        let good_suffix_shift = n - 1 - good_suffix_pos;
+                        let good_suffix_shift = match good_suffix_pos < n {
+                            true => n - 1 - good_suffix_pos,
+                            _ => 1,
+                        };
                         match bad_char_shift < good_suffix_shift {
                             true => k += good_suffix_shift,
                             _ => k += bad_char_shift,
@@ -79,10 +98,17 @@ impl<'a> BoyerMooreSearcher<'a> {
 impl<'a> Iterator for BoyerMooreSearcher<'a> {
     type Item = usize;
     fn next(&mut self) -> Option<usize> {
-        if self.pos >= (self.text.len() - self.pat.len()) {
+        if self.pos > (self.text.len() - self.pat.len()) {
             None
         } else {
-            match Self::search_helper(self.pat, self.text, self.pos) {
+            match Self::search_helper(
+                self.pat,
+                self.text,
+                self.pos,
+                &self.prep_l,
+                &self.prep_lprime,
+                &self.prep_r,
+            ) {
                 Some((u, v)) => {
                     self.pos = v;
                     Some(u)
@@ -123,5 +149,25 @@ mod string_algorithm_tests {
             super::BoyerMooreSearcher::new("abxyabxz", "xabxycbxyabxy").collect::<Vec<usize>>(),
             vec![]
         );
+    }
+    #[test]
+    fn boyer_mooore_test_2() {
+        let text =
+            "TTGAATGCTGAAATCAGCAGGTAATATATGATAATAGAGAAAGCTATCCCGAAGGTGCATAGGTCAACAATACTTGAGCC";
+        let pat = "TGA";
+        let searcher = super::BoyerMooreSearcher::new(pat, text);
+        let results: Vec<usize> = searcher.collect();
+        println!("{:?}", results);
+    }
+    #[test]
+    fn boyer_mooore_test_3() {
+        let text = "MDSKGSSQKGSRLLLLLVVSNLLLCQGVVSTPVCPNGPGNCQVSLRDLFDRAVMVSHYIHDLSS\
+            EMFNEFDKRYAQGKGFITMALNSCHTSSLPTPEDKEQAQQTHHEVLMSLILGLLRSWNDPLYHL\
+            VTEVRGMKGAPDAILSRAIEIEEENKRLLEGMEMIFGQVIPGAKETEPYPVWSGLPSLQTKDED\
+            ARYSAFYNLLHCLRRDSSKIDTYLKLLNCRIIYNNNC";
+        let pat = "LLLLLVVSN";
+        let searcher = super::BoyerMooreSearcher::new(pat, text);
+        let results: Vec<usize> = searcher.collect();
+        println!("{:?}", results);
     }
 }
