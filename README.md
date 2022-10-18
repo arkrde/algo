@@ -17,4 +17,8 @@ Rust package for a variety of practical algorithms
         - [ ] Inexact Matching Algorithms
     - [ ] Suffix Trees
         - [ ] Exact Set Matching Algorithm
+- [ ] Combinatorial Algorithms
+    - [ ] Permutations
+        - [ ] Heap's algorithm (for unique elements)
+        - [ ] Lexically sorted generator
                 
