@@ -9,15 +9,10 @@ fn main() {
     let pat = "LLLLLVVSNLLLCQGVVSTPVCPNGPGNCQVS";
     let mut counter = 0;
     {
-        for _ in 0..1000 {
-            let result: Vec<usize> = naive_search::NaiveSearcher::new(pat, text).collect();
-            counter +=  result.len();
+        for _ in 0..1000000 {
+            let res: Vec<usize> = boyer_moore::BoyerMooreSearcher::new(pat, text).collect();
+            counter += res.len();
         }
     }
     println!("{}", counter);
-    // {
-    //     for _ in 0..1000 {
-    //         let _: Vec<usize> = boyer_moore::BoyerMooreSearcher::new(pat, text).collect();
-    //     }
-    // }
 }
