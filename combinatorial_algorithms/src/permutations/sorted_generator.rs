@@ -1,8 +1,11 @@
 //! Iterator that produces all permutations of a sequence
-//! in a lexicographically sorted order
+//! in a lexicographically sorted order.
+
+/// This implements a generator that generates all permutations of a sequence 
+/// in a lexicographic sorted order using "Algorithm-L" by Knuth
 struct Generator<T> {
     seq: Vec<T>,
-    started : bool
+    started: bool,
 }
 
 impl<T> Generator<T>
@@ -12,7 +15,10 @@ where
     pub fn new<Iter: Iterator<Item = T>>(seq: Iter) -> Generator<T> {
         let mut seq: Vec<T> = seq.into_iter().collect();
         seq.sort();
-        Generator { seq, started : false }
+        Generator {
+            seq,
+            started: false,
+        }
     }
 }
 
@@ -38,7 +44,12 @@ where
                 None
             } else {
                 let j = n - 2 - shift;
-                let shift = self.seq.iter().rev().take_while(|v| v <= &&self.seq[j]).count();
+                let shift = self
+                    .seq
+                    .iter()
+                    .rev()
+                    .take_while(|v| v <= &&self.seq[j])
+                    .count();
                 let l = n - 1 - shift;
                 self.seq.swap(j, l);
                 let mut k = j + 1;
