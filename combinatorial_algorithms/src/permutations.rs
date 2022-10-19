@@ -1,1 +1,1 @@
-pub mod algo_heap;
+pub mod sorted_generator;
