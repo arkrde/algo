@@ -20,5 +20,5 @@ Rust package for a variety of practical algorithms
 - [ ] Combinatorial Algorithms
     - [ ] Permutations
         - [ ] Heap's algorithm (for unique elements)
-        - [ ] Lexically sorted generator
+        - [X] Lexically sorted generator (Knuth's "Algorithm-L")
                 
