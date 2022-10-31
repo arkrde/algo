@@ -1,6 +1,7 @@
 [workspace]
 members = [
-    "string_algorithms"
+    "string_algorithms",
+    "combinatorial_algorithms",
 ]
 
 [workspace.package]
