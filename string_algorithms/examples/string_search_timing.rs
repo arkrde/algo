@@ -10,8 +10,9 @@ fn main() {
     let mut counter = 0;
     {
         for _ in 0..1000 {
-            let result: Vec<usize> = naive_search::NaiveSearcher::new(pat, text).collect();
-            counter +=  result.len();
+            let result: Vec<usize> =
+                naive_search::NaiveSearcher::new(pat.as_bytes(), text.as_bytes()).collect();
+            counter += result.len();
         }
     }
     println!("{}", counter);
