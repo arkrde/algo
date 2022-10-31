@@ -1,15 +1,20 @@
 // preprocess-Z as common preprocessing for smarter algorithms
 // e.g. BM, KMP, etc.
-pub mod preprocess_z;
+mod preprocess_z;
+pub use preprocess_z::PrepZ;
 
 // preprocess-N for Boyer Moore
-pub mod preprocess_n;
+mod preprocess_n;
+pub use preprocess_n::PrepN;
 
 // preprocess-L for Boyer Moore
-pub mod preprocess_l;
+mod preprocess_l;
+pub use preprocess_l::PrepL;
 
 // preprocess-Lprime for Boyer Moore
-pub mod preprocess_lprime;
+mod preprocess_lprime;
+pub use preprocess_lprime::PrepLp;
 
 // preprocess-R for Boyer Moore
-pub mod preprocess_r;
+mod preprocess_r;
+pub use preprocess_r::PrepR;

@@ -5,8 +5,13 @@
 mod preprocess;
 
 /// Linear search based on Boyer Moore algorithm, additionally using preprocess-Z
-pub mod boyer_moore;
+mod boyer_moore;
+pub use boyer_moore::BoyerMooreSearcher;
+
 /// Simple linear-time exact string search using preprocess-Z
-pub mod linear_search;
+mod linear_search;
+pub use linear_search::Searcher;
+
 /// Naive search based on backtracking on first  mismatch
-pub mod naive_search;
+mod naive_search;
+pub use naive_search::NaiveSearcher;

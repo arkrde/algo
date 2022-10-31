@@ -1,4 +1,4 @@
-use super::preprocess_z;
+use super::preprocess_z::PrepZ;
 
 pub struct PrepN {
     // prep: preprocess_z::PrepZ,
@@ -8,7 +8,7 @@ pub struct PrepN {
 impl PrepN {
     pub fn from_str(text: &str) -> PrepN {
         let text_rev = text.chars().rev().collect::<String>();
-        let prep_z = preprocess_z::PrepZ::from_str(text_rev.as_str());
+        let prep_z = PrepZ::from_str(text_rev.as_str());
         let score_vec = (0..prep_z.len())
             .map(|idx| prep_z.score(prep_z.len() - 1 - idx).unwrap())
             .collect();

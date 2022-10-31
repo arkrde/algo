@@ -1,5 +1,5 @@
 extern crate string_algorithms;
-use string_algorithms::string_search::*;
+use string_algorithms::string_search::BoyerMooreSearcher;
 
 fn main() {
     let text = "MDSKGSSQKGSRLLLLLVVSNLLLCQGVVSTPVCPNGPGNCQVSLRDLFDRAVMVSHYIHDLSS\
@@ -10,7 +10,7 @@ fn main() {
     let mut counter = 0;
     {
         for _ in 0..1000000 {
-            let res: Vec<usize> = boyer_moore::BoyerMooreSearcher::new(pat, text).collect();
+            let res: Vec<usize> = BoyerMooreSearcher::new(pat, text).collect();
             counter += res.len();
         }
     }
