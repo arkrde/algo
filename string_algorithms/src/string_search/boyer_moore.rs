@@ -1,7 +1,4 @@
-use super::preprocess::preprocess_l::PrepL;
-use super::preprocess::preprocess_lprime::PrepLp;
-use super::preprocess::preprocess_n::PrepN;
-use super::preprocess::preprocess_r::PrepR;
+use super::preprocess::*;
 
 pub struct BoyerMooreSearcher<'a> {
     pat: &'a str,
@@ -28,11 +25,7 @@ impl<'a> BoyerMooreSearcher<'a> {
             prep_r,
         }
     }
-    fn compute_good_suffix_distance(
-        prep_l: &PrepL,
-        prep_lprime: &PrepLp,
-        pos: usize,
-    ) -> usize {
+    fn compute_good_suffix_distance(prep_l: &PrepL, prep_lprime: &PrepLp, pos: usize) -> usize {
         let l_score = prep_l.score(pos);
         match l_score {
             Some(u) => u,

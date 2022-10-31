@@ -1,5 +1,5 @@
 extern crate string_algorithms;
-use string_algorithms::string_search::*;
+use string_algorithms::string_search::NaiveSearcher;
 
 fn main() {
     let text = "MDSKGSSQKGSRLLLLLVVSNLLLCQGVVSTPVCPNGPGNCQVSLRDLFDRAVMVSHYIHDLSS\
@@ -10,8 +10,7 @@ fn main() {
     let mut counter = 0;
     {
         for _ in 0..1000 {
-            let result: Vec<usize> =
-                naive_search::NaiveSearcher::new(pat.as_bytes(), text.as_bytes()).collect();
+            let result: Vec<usize> = NaiveSearcher::new(pat.as_bytes(), text.as_bytes()).collect();
             counter += result.len();
         }
     }
